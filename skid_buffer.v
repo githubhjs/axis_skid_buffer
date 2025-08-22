@@ -27,15 +27,15 @@ module skid_buffer #(
    input  wire                clk             ,           // Clock
    input  wire                rstn            ,           // Active-low synchronous reset
    
-   // Input Interface   
-   input  wire [DWIDTH-1 : 0] i_data          ,           // Data in
-   input  wire                i_valid         ,           // Data in valid
-   output reg                 o_ready         ,           // Ready out
-   
-   // Output Interface
-   output reg [DWIDTH-1 : 0]  o_data          ,            // Data out
-   output reg                 o_valid         ,            // Data out valid
-   input  wire                i_ready                      // Ready in
+     // Input Interface   
+  input  wire [DWIDTH-1 : 0] i_data          ,           // Data in
+  input  wire                i_valid         ,           // Data in valid
+  output wire                o_ready         ,           // Ready out
+  
+  // Output Interface
+  output wire [DWIDTH-1 : 0] o_data          ,            // Data out
+  output wire                o_valid         ,            // Data out valid
+  input  wire                i_ready                      // Ready in
 ) ;
 
 
@@ -70,7 +70,7 @@ always @(posedge clk) begin
          
          ready_rg <= 1'b1 ;
 
-         if (!i_ready && i_valid && ready_rg) begin
+         if (!i_ready && i_valid) begin
             ready_rg  <= 1'b0   ;            
             data_rg   <= i_data ;        // Data skid happened, store to buffer
             bypass_rg <= 1'b0   ;        // To skid mode  
@@ -98,7 +98,7 @@ end
 -------------------------------------------------------------------------------------------------------------------------------*/
 assign o_ready = ready_rg                                   ;        
 assign o_data  = bypass_rg ? i_data  : data_rg              ;        // Data mux
-assign o_valid = bypass_rg ? (i_valid & ready_rg) : 1'b1    ;        // Data valid mux
+assign o_valid = bypass_rg ? i_valid : 1'b1    ;        // Data valid mux
 
 
 endmodule

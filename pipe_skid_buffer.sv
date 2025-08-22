@@ -31,11 +31,11 @@ module pipe_skid_buffer #(
    // Input Interface   
    input  logic [DWIDTH-1 : 0] i_data          ,           // Data in
    input  logic                i_valid         ,           // Data in valid
-   output logic                o_ready         ,           // Ready out
+   output wire                o_ready         ,           // Ready out
    
    // Output Interface
-   output logic [DWIDTH-1 : 0] o_data          ,            // Data out
-   output logic                o_valid         ,            // Data out valid
+   output wire [DWIDTH-1 : 0] o_data          ,            // Data out
+   output wire                o_valid         ,            // Data out valid
    input  logic                i_ready                      // Ready in
 ) ;
 
@@ -55,7 +55,7 @@ localparam SKID  = 1'b1 ;
 logic                state_rg                                  ;        // State register
 logic [DWIDTH-1 : 0] data_rg, sparebuff_rg                     ;        // Data buffer, Spare buffer
 logic                valid_rg, sparebuff_valid_rg, ready_rg    ;        // Valid and Ready signals 
-logic                ready                                     ;        // Pipeline ready signal
+wire                 ready                                     ;        // Pipeline ready signal
 
 
 /*-------------------------------------------------------------------------------------------------------------------------------
