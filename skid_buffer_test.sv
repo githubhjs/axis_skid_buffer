@@ -1,4 +1,4 @@
-module skid_buffer_test #();
+module skid_buffer_test;
 
   localparam int DWIDTH  = 8;
     
